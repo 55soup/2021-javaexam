@@ -1,43 +1,43 @@
-//+ ÃÖ°íÆÀ¿¡ ÀÌ¾î 2µî 3µî°ú ÃÑ Á¡¼ö¸¦ Ãâ·ÂÇÑ´Ù.
-//+ °°Àº Á¡¼öÀÇ ÆÀÀÎ °æ¿ì ¼ıÀÚ°¡ ´õ ¸¹Àº ÆÀÀÌ µÚ¿¡ µî¼ö·Î ¹Ğ·Á³­´Ù. ex) 2µî-3Á¶ : 30Á¡,  3µî-5Á¶ : 30Á¡ 
-//+ Æò±Õ Ãâ·Â ¤¢?
+//+ ìµœê³ íŒ€ì— ì´ì–´ 2ë“± 3ë“±ê³¼ ì´ ì ìˆ˜ë¥¼ ì¶œë ¥í•œë‹¤.
+//+ ê°™ì€ ì ìˆ˜ì˜ íŒ€ì¸ ê²½ìš° ìˆ«ìê°€ ë” ë§ì€ íŒ€ì´ ë’¤ì— ë“±ìˆ˜ë¡œ ë°€ë ¤ë‚œë‹¤. ex) 2ë“±-3ì¡° : 30ì ,  3ë“±-5ì¡° : 30ì  
+//+ í‰ê·  ì¶œë ¥ ã„²?
 import java.util.Scanner;
 public class Array2_score{
 	public static void main(String args[]) {
 		
-		int[][] score = new int[5][3]; //Á¡¼ö
-		int[] sum = new int[5]; //ÃÑÁ¡
+		int[][] score = new int[5][3]; //ì ìˆ˜
+		int[] sum = new int[5]; //ì´ì 
 		int[] rank = {1,1,1,1,1};
 		double[] ave = new double[5];
 		
-		score = input(score); //ÀÔ·Â
-		sum = resultSum(score, sum); //ÆÀ´ç ÃÑ Á¡¼ö
+		score = input(score); //ì…ë ¥
+		sum = resultSum(score, sum); //íŒ€ë‹¹ ì´ ì ìˆ˜
 		ave = resultAve(score, sum, ave);
-		rank = take_rank(score, sum, rank); //µî¼ö
-		print_result(score, rank, sum, ave); //°á°ú Ãâ·Â
+		rank = take_rank(score, sum, rank); //ë“±ìˆ˜
+		print_result(score, rank, sum, ave); //ê²°ê³¼ ì¶œë ¥
 	}
 	
-	public static int[][] input(int[][] score) {//ÀÔ·Â
+	public static int[][] input(int[][] score) {//ì…ë ¥
 		Scanner scan = new Scanner(System.in);
-		String[] item = {"¿Ï¼ºµµ","Ã¢ÀÇ¼º","ÀÌÇØµµ"};
+		String[] item = {"ì™„ì„±ë„","ì°½ì˜ì„±","ì´í•´ë„"};
 		
-		//ÀÔ·Â
+		//ì…ë ¥
 		for(int i=0; i<score.length; i++) {
-			System.out.println(i+1 + "Á¶");
+			System.out.println(i+1 + "ì¡°");
 			for(int j=0; j<score[i].length; j++) {
 				
-				System.out.print(item[j]+" Á¡¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+				System.out.print(item[j]+" ì ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 				score[i][j]= scan.nextInt();
 				
-				if(score[i][j]<0 || score[i][j]>20) {//À¯È¿¼º °Ë»ç
-					System.out.println("0~20Á¡ »çÀÌÀÇ ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+				if(score[i][j]<0 || score[i][j]>20) {//ìœ íš¨ì„± ê²€ì‚¬
+					System.out.println("0~20ì  ì‚¬ì´ì˜ ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 					--j;
 				}
 			}
 		}
 		return score;
 	}
-	public static int[] resultSum(int[][] score, int[] sum) {//ÆÀ ´ç ÃÑ Á¡¼ö
+	public static int[] resultSum(int[][] score, int[] sum) {//íŒ€ ë‹¹ ì´ ì ìˆ˜
 		
 		for(int i=0; i<score.length; i++) {
 			for(int j=0; j<score[i].length; j++) {
@@ -49,13 +49,13 @@ public class Array2_score{
 	public static double[] resultAve(int[][] score, int[] sum, double[] ave) {
 		
 		for(int i=0; i<score.length; i++) {
-				ave[i] = (double)sum[i]/3; // int[] sum -> Çüº¯È¯  double[] sum
+				ave[i] = (double)sum[i]/3; // int[] sum -> í˜•ë³€í™˜  double[] sum
 		}
 		return ave;
 	}
 	
-	public static int[] take_rank(int[][] score, int[] sum, int[] rank) {//µî¼ö
-		//µî¼ö±¸ÇÏ±â
+	public static int[] take_rank(int[][] score, int[] sum, int[] rank) {//ë“±ìˆ˜
+		//ë“±ìˆ˜êµ¬í•˜ê¸°
 		for(int i=0; i<score.length-1; i++) {
          	for(int j=i+1; j<score.length; j++) {
          		if(sum[i]<sum[j])
@@ -63,17 +63,17 @@ public class Array2_score{
          		else if(sum[i]>sum[j])
          			++rank[j];
          		else if(sum[i]==sum[j])
-         			++rank[j]; //°°Àº Á¡¼öÀÇ ÆÀÀÎ °æ¿ì ¼ıÀÚ°¡ ´õ ¸¹Àº ÆÀÀÌ µÚ¿¡ µî¼ö·Î ¹Ğ·Á³­´Ù.
+         			++rank[j]; //ê°™ì€ ì ìˆ˜ì˜ íŒ€ì¸ ê²½ìš° ìˆ«ìê°€ ë” ë§ì€ íŒ€ì´ ë’¤ì— ë“±ìˆ˜ë¡œ ë°€ë ¤ë‚œë‹¤.
          	}
 		 }
 	 return rank;
 	}
 	
-	public static void print_result(int[][] score, int[] rank, int[] sum, double[] ave) {//°á°ú
+	public static void print_result(int[][] score, int[] rank, int[] sum, double[] ave) {//ê²°ê³¼
 		int[] print_rank = new int[3];
 		double temp;
 
-		//µî¼ö 1~3µî ±îÁö Ãâ·Â!
+		//ë“±ìˆ˜ 1~3ë“± ê¹Œì§€ ì¶œë ¥!
 		for(int i=0; i<score.length; i++) { 
 			
 			switch(rank[i]) {
@@ -82,7 +82,7 @@ public class Array2_score{
 			case 3: print_rank[2] = i+1; break;
 			}
 		}
-		for(int i=0; i<score.length-1; i++) { // ÃÑ Á¡¼ö ³»¸²Â÷¼ø Á¤·Ä
+		for(int i=0; i<score.length-1; i++) { // ì´ ì ìˆ˜ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬
 			for(int j=i+1; j<score.length; j++) {
 				if(sum[i] < sum[j]) {
 					temp = sum[i];
@@ -92,7 +92,7 @@ public class Array2_score{
 			}
 		}
 		
-		for(int i=0; i<score.length-1; i++) { // Á¡¼ö ³»¸²Â÷¼ø Á¤·Ä
+		for(int i=0; i<score.length-1; i++) { // ì ìˆ˜ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬
 			for(int j=i+1; j<score.length; j++) {
 				if(ave[i] < ave[j]) {
 					temp = ave[i];
@@ -101,9 +101,9 @@ public class Array2_score{
 				}
 			}
 		}
-		System.out.println("ÃÖ°íÆÀ: "+print_rank[0]+"Á¶ -> ÃÑ Á¡¼ö : "+ sum[0]+"Á¡, Æò±Õ: "+ave[0]);
-		System.out.println("ÃÖ°íÆÀ: "+print_rank[1]+"Á¶ -> ÃÑ Á¡¼ö : "+ sum[1]+"Á¡, Æò±Õ: "+ave[1]);
-		System.out.println("ÃÖ°íÆÀ: "+print_rank[2]+"Á¶ -> ÃÑ Á¡¼ö : "+ sum[2]+"Á¡, Æò±Õ: "+ave[2]);
+		System.out.println("ìµœê³ íŒ€: "+print_rank[0]+"ì¡° -> ì´ ì ìˆ˜ : "+ sum[0]+"ì , í‰ê· : "+ave[0]);
+		System.out.println("ë‘ë²ˆ ì§¸ íŒ€: "+print_rank[1]+"ì¡° -> ì´ ì ìˆ˜ : "+ sum[1]+"ì , í‰ê· : "+ave[1]);
+		System.out.println("ì„¸ë²ˆ ì§¸ íŒ€: "+print_rank[2]+"ì¡° -> ì´ ì ìˆ˜ : "+ sum[2]+"ì , í‰ê· : "+ave[2]);
 	}
 	
 }
