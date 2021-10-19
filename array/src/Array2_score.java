@@ -1,33 +1,32 @@
-//+ 최고팀에 이어 2등 3등과 총 점수를 출력한다.
-//+ 같은 점수의 팀인 경우 숫자가 더 많은 팀이 뒤에 등수로 밀려난다. ex) 2등-3조 : 30점,  3등-5조 : 30점 
-//+ 평균 출력 ㄲ?
+package array_2;
+
 import java.util.Scanner;
-public class Array2_score{
-	public static void main(String args[]) {
+
+public class Array2_score {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[][] score = new int[5][5];
+		score = inputScore(score); // 0열2열 점수 부분
+		score = getSumScore(score); // 3열 점수합 부분
+		score = getRank(score); // 4열 등수 부분
+		printResult(score);
 		
-		int[][] score = new int[5][3]; //점수
-		int[] sum = new int[5]; //총점
-		int[] rank = {1,1,1,1,1};
-		double[] ave = new double[5];
-		
-		score = input(score); //입력
-		sum = resultSum(score, sum); //팀당 총 점수
-		ave = resultAve(score, sum, ave);
-		rank = take_rank(score, sum, rank); //등수
-		print_result(score, rank, sum, ave); //결과 출력
 	}
-	
-	public static int[][] input(int[][] score) {//입력
+
+	public static int[][] inputScore (int[][] score) {
+		// TODO Auto-generated method stub
 		Scanner scan = new Scanner(System.in);
 		String[] item = {"완성도","창의성","이해도"};
 		
+		System.out.println("0~20점 사이의 점수를 입력하세요.");
 		//입력
 		for(int i=0; i<score.length; i++) {
-			System.out.println(i+1 + "조");
-			for(int j=0; j<score[i].length; j++) {
-				
-				System.out.print(item[j]+" 점수를 입력하세요: ");
-				score[i][j]= scan.nextInt();
+			System.out.println("========================================================");
+			System.out.println(i+1 + "조"); // 조 출력
+			for(int j=0; j<3; j++) {
+				System.out.print(item[j]+" 점수를 입력하세요: ");  // 평가항목 출력
+				score[i][j]= scan.nextInt(); // score[0][0]~score[0][2] / score[1][0]~score[1][2] / score[2][0]~score[2][2]
 				
 				if(score[i][j]<0 || score[i][j]>20) {//유효성 검사
 					System.out.println("0~20점 사이의 수를 입력하세요.");
@@ -37,73 +36,48 @@ public class Array2_score{
 		}
 		return score;
 	}
-	public static int[] resultSum(int[][] score, int[] sum) {//팀 당 총 점수
-		
-		for(int i=0; i<score.length; i++) {
-			for(int j=0; j<score[i].length; j++) {
-				sum[i] += score[i][j];
+
+	public static int[][] getSumScore(int[][] score) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<score.length; i++) { 
+			for(int j=0; j<3; j++) {
+				score[i][3] += score[i][j];
+				
 			}
 		}
-		return sum;
-	}
-	public static double[] resultAve(int[][] score, int[] sum, double[] ave) {
-		
-		for(int i=0; i<score.length; i++) {
-				ave[i] = (double)sum[i]/3; // int[] sum -> 형변환  double[] sum
-		}
-		return ave;
+		return score;
 	}
 	
-	public static int[] take_rank(int[][] score, int[] sum, int[] rank) {//등수
-		//등수구하기
+	public static int[][] getRank(int[][] score) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<score.length; i++) {// 등수 값을 1로 초기화
+			score[i][4]=1;
+		}
+		
 		for(int i=0; i<score.length-1; i++) {
          	for(int j=i+1; j<score.length; j++) {
-         		if(sum[i]<sum[j])
-         			++rank[i];
-         		else if(sum[i]>sum[j])
-         			++rank[j];
-         		else if(sum[i]==sum[j])
-         			++rank[j]; //같은 점수의 팀인 경우 숫자가 더 많은 팀이 뒤에 등수로 밀려난다.
+         		
+         		if(score[i][3]<score[j][3]) // 총점이 낮을경우 랭킹이 뒤로 밀려남.
+         			++score[i][4];
+				else if(score[i][3]>score[j][3]) 
+					++score[j][4];
+         		else if(score[i][3]==score[j][3]) //동점일 경우 랭킹이 같아야함.
+         			score[j][4]=score[i][4];
+         		
          	}
 		 }
-	 return rank;
+		return score;
 	}
 	
-	public static void print_result(int[][] score, int[] rank, int[] sum, double[] ave) {//결과
-		int[] print_rank = new int[3];
-		double temp;
-
-		//등수 1~3등 까지 출력!
-		for(int i=0; i<score.length; i++) { 
-			
-			switch(rank[i]) {
-			case 1: print_rank[0] = i+1; break;
-			case 2: print_rank[1] = i+1; break;
-			case 3: print_rank[2] = i+1; break;
-			}
-		}
-		for(int i=0; i<score.length-1; i++) { // 총 점수 내림차순 정렬
-			for(int j=i+1; j<score.length; j++) {
-				if(sum[i] < sum[j]) {
-					temp = sum[i];
-					sum[i] = sum[j];
-					sum[j] = (int)temp;
-				}
-			}
-		}
+	public static void printResult (int[][] score) {
+		// TODO Auto-generated method stub
+		System.out.println("최고팀은: ");
 		
-		for(int i=0; i<score.length-1; i++) { // 점수 내림차순 정렬
-			for(int j=i+1; j<score.length; j++) {
-				if(ave[i] < ave[j]) {
-					temp = ave[i];
-					ave[i] = ave[j];
-					ave[j] = temp;
-				}
-			}
+		for(int i=0; i<score.length; i++) {
+			if(score[i][4]==1) // 공동 1등인 경우도 염두
+				System.out.println((i+1)+"조  "+"=> 총 점수: "+score[i][3]);
 		}
-		System.out.println("최고팀: "+print_rank[0]+"조 -> 총 점수 : "+ sum[0]+"점, 평균: "+ave[0]);
-		System.out.println("두번 째 팀: "+print_rank[1]+"조 -> 총 점수 : "+ sum[1]+"점, 평균: "+ave[1]);
-		System.out.println("세번 째 팀: "+print_rank[2]+"조 -> 총 점수 : "+ sum[2]+"점, 평균: "+ave[2]);
+		System.out.print("입니다.");
 	}
-	
+
 }
